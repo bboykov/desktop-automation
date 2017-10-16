@@ -9,9 +9,12 @@
       apt:
         name: "{{ item }}"
         state: present
-      with_items:
-          - vim
       become: true
+      with_items:
+        - ubuntu-restricted-extras
+        - vlc
+        - tlp
+        - tlp-rdw
 
   roles:
     - gnome-desktop
