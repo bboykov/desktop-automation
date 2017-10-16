@@ -9,4 +9,4 @@ if ! hash ansible 2>/dev/null ; then
 fi
 
 ansible-galaxy install --force -r requirements.yml
-ansible-playbook -i localhost, -c local main_playbook.yml
+ansible-playbook -i localhost, -c local main_playbook.yml --ask-sudo-pass
