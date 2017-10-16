@@ -1,0 +1,4 @@
+---
+- include: general_gsettings.yml
+- include: gnome-terminal.yml
+

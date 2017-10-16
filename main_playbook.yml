@@ -1,0 +1,18 @@
+---
+- hosts: all
+
+  vars:
+    test: "{{ ansible_distribution }}"
+
+  pre_tasks:
+    - name: Install OS Packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+          - vim
+      become: true
+
+  roles:
+    - gnome-desktop
+    - google-chrome
