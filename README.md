@@ -1,21 +1,25 @@
 # ansible-provision-ubuntu-desktop
 
 
-## Get from the repository
+## Setup and run
 
 ```bash
 sudo apt install -y git
 wget -qO- https://github.com/bboykov/configure-ubuntu-desktop/raw/master/setup_and_run.sh | bash
 ```
 
-## Inspired by
+## Inspiration
 
-provisioning-local by JBKahn
-https://blog.josephkahn.io/articles/ansible/
-https://github.com/JBKahn/provisioning-local
+[provisioning-local by JBKahn][provisioning-local] repo and his [blog post][articles_ansible]
 
-ubuntu-ansible by MichaelAquilina
-https://github.com/MichaelAquilina/ubuntu-ansible
+[provisioning-local]: https://github.com/JBKahn/provisioning-local
+[articles_ansible]: https://blog.josephkahn.io/articles/ansible/
 
-mac-dev-playbook by geerlingguy
-https://github.com/geerlingguy/mac-dev-playbook
+
+[ubuntu-ansible by MichaelAquilina][2]
+
+[2]: https://github.com/MichaelAquilina/ubuntu-ansible
+
+[mac-dev-playbook by geerlingguy][3]
+
+[3]: https://github.com/geerlingguy/mac-dev-playbook
