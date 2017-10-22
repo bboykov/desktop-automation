@@ -10,7 +10,7 @@
           Ansible verison is {{ ansible_version.full }}. This playbook requires Ansible {{ required_ansible_version }} or greater.
       when: ansible_version.full < required_ansible_version
 
-    - name: Install OS Packages
+    - name: Install OS Packages.
       apt:
         name: "{{ item }}"
         state: present
@@ -22,12 +22,13 @@
         - tlp-rdw
         - network-manager-openvpn-gnome
 
-    - name: Install chrome
+    - name: Configure GNOME Shell.
+      import_tasks: tasks_gnome.yml
+
+    - name: Configure GNOME Terminal.
+      import_tasks: tasks_gnome_terminal.yml
+
+    - name: Install Google Chrome.
       import_role:
         name: google-chrome
 
-    - name: Configure GNOME desktop
-      import_tasks: tasks_gnome.yml
-
-    - name: Configure GNOME Terminal
-      import_tasks: tasks_gnome_terminal.yml
