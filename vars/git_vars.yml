@@ -28,13 +28,13 @@ gitconfig:
     default: current
   commit:
     template: "~/.gitmessage.txt"
+    verbose: true
   alias:
     co: checkout
     st: status
     pur: pull --rebase
     br: branch
     sth: stash
-    vcommit: commit --verbose
     fcommit: commit --fixup
     unstage: reset HEAD --
     last: log -1 HEAD
@@ -71,19 +71,11 @@ gitconfig_commit_message: |
   # Type can be
   #    feat     (new feature)
   #    fix      (bug fix)
-  #    refactor (refactoring production code)
+  #    update   (update code)
+  #    refactor (refactoring code)
+  #    rewrite  (rewriting code)
   #    style    (formatting, missing semi colons, etc; no code change)
   #    docs     (changes to documentation)
-  #    test     (adding or refactoring tests; no production code change)
-  #    chore    (updating grunt tasks etc; no production code change)
-  # --------------------
-  # Remember to
-  #    Capitalize the subject line
-  #    Use the imperative mood in the subject line
-  #    Do not end the subject line with a period
-  #    Separate subject from body with a blank line
-  #    Use the body to explain what and why vs. how
-  #    Can use multiple lines with "-" for bullet points in body
   # --------------------
   # For more information about this template, check out
   # https://chris.beams.io/posts/git-commit/
