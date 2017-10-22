@@ -3,6 +3,9 @@
   vars:
     required_ansible_version: "2.2.1.0"
 
+  vars_files:
+          - vars/git_vars.yml
+
   tasks:
     - name: "Fail if current Ansible version less than {{ required_ansible_version }}"
       fail:
@@ -32,3 +35,6 @@
       import_role:
         name: google-chrome
 
+    - name: Configure Git.
+      import_role:
+        name: gitconfig

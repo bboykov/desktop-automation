@@ -17,3 +17,6 @@
   src: https://github.com/patrick-hill/ansible-role-chrome.git
   path: ./roles
 
+- name: gitconfig
+  src: https://github.com/bboykov/ansible-role-gitconfig.git
+  path: ./roles
