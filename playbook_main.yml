@@ -24,17 +24,27 @@
         - tlp
         - tlp-rdw
         - network-manager-openvpn-gnome
+      tags:
+        - packages
 
     - name: Configure GNOME Shell.
       import_tasks: tasks_gnome.yml
+      tags:
+        - gnome
 
     - name: Configure GNOME Terminal.
       import_tasks: tasks_gnome_terminal.yml
+      tags:
+        - gnome
 
     - name: Install Google Chrome.
       import_role:
         name: google-chrome
+      tags:
+        - gnome
 
     - name: Configure Git.
       import_role:
         name: gitconfig
+      tags:
+        - git
