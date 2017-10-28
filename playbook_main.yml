@@ -49,6 +49,11 @@
       tags:
         - gnome
 
+    - name: Configure VIM
+      import_tasks: tasks_vimconf.yml
+      tags:
+        - vimconf
+
     - name: Configure Git.
       import_role:
         name: gitconfig

@@ -1,0 +1,47 @@
+---
+- name: Update the apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600 # 1h
+  become: true
+
+# https://itsfoss.com/vim-8-release-install/
+- name: Add ppa:jonathonf/vim to install latest vim
+  apt_repository:
+    repo: 'ppa:jonathonf/vim'
+    state: present
+  become: true
+
+- name: Install OS VIM Packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  become: true
+  with_items:
+    - vim
+    - vim-gtk3
+  become: true
+
+- name: Clone Vundle repo
+  git:
+    repo: https://github.com/VundleVim/Vundle.vim.git
+    dest: "{{ ansible_env.HOME }}/.vim/bundle/Vundle.vim"
+
+- name: Clone vimconf repo
+  git:
+    repo: https://github.com/bboykov/vimconf.git
+    dest: "{{ ansible_env.HOME }}/vimconf"
+
+- name: Source vimconf in vimrc
+  blockinfile:
+    dest: "{{ ansible_env.HOME }}/.vimrc"
+    marker: "\" {mark} Source vimconf ANSIBLE MANAGED BLOCK"
+    block: |
+      source ~/vimconf/main.vim
+    create: yes
+  register: source_vimconf
+
+- name: Run vim +PluginInstall +qall after sourcing vimconf
+  command: >
+    vim +PluginInstall +qall
+  when: source_vimconf.changed
