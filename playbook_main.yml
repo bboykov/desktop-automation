@@ -59,3 +59,8 @@
         name: gitconfig
       tags:
         - git
+
+    - name: Configure shell
+      import_tasks: tasks_shell.yml
+      tags:
+        - shell
