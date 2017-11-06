@@ -54,7 +54,7 @@ gitconfig_ignore:
 
 gitconfig_set_commit_message: true
 gitconfig_commit_message: |
-  # <type>: (If applied, this commit will...) <subject> (Max 50 char)
+  # (If applied, this commit will...) <subject> (Max 50 char)
   # |<----  Using a Maximum Of 50 Characters  ---->|
 
   # Explain why this change is being made
@@ -67,16 +67,6 @@ gitconfig_commit_message: |
   # Provide links to any relevant tickets, articles or other resources
   # Example: Github issue #23
 
-  # --- COMMIT END ---
-  # Type can be
-  #    feat     (new feature)
-  #    fix      (bug fix)
-  #    update   (update code)
-  #    refactor (refactoring code)
-  #    rewrite  (rewriting code)
-  #    style    (formatting, missing semi colons, etc; no code change)
-  #    docs     (changes to documentation)
-  # --------------------
   # For more information about this template, check out
   # https://chris.beams.io/posts/git-commit/
 
