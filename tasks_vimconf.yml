@@ -27,10 +27,17 @@
     repo: https://github.com/VundleVim/Vundle.vim.git
     dest: "{{ ansible_env.HOME }}/.vim/bundle/Vundle.vim"
 
+- name: Check if vimconf was cloned
+  stat:
+    path: "{{ ansible_env.HOME }}/vimconf"
+  register: vimconf_is_cloned
+  changed_when: false
+
 - name: Clone vimconf repo
   git:
     repo: https://github.com/bboykov/vimconf.git
     dest: "{{ ansible_env.HOME }}/vimconf"
+  when: vimconf_is_cloned.stat.exists == false
 
 - name: Source vimconf in vimrc
   blockinfile:
@@ -39,9 +46,16 @@
     block: |
       source ~/vimconf/main.vim
     create: yes
-  register: source_vimconf
 
 - name: Run vim +PluginInstall +qall after sourcing vimconf
   command: >
     vim +PluginInstall +qall
-  when: source_vimconf.changed
+  when: vimconf_is_cloned.stat.exists == false
+
+- name: Run vim +PluginClean +qall to remove unused plugins
+  command: >
+    vim +PluginClean! +qall
+
+- name: Run vim +PluginUpdate +qall to update plugins
+  command: >
+    vim +PluginInstall +qall
