@@ -34,13 +34,20 @@
       executable: /bin/bash
   when: bash_it_is_installed.stat.exists == true
 
+- name: Check if dotfiles repo has been cloned
+  stat:
+    path: ~/.bash_it/
+  register: dotfiles_is_cloned
+  changed_when: false
+
 - name: Clone dotfiles repo
   git:
     repo: https://github.com/bboykov/dotfiles.git
     dest: ~/dotfiles
   register: dotfiles_repo
+  when: dotfiles_is_cloned.stat.exists == false
 
-- name: Run makesymlinks script
+- name: Run dotfiles makesymlinks script
   shell: >
     cd ~/dotfiles && ./makesymlinks.sh
   args:
