@@ -19,20 +19,6 @@
         cache_valid_time: 3600 # 1h
       become: true
 
-    - name: Install OS Packages.
-      apt:
-        name: "{{ item }}"
-        state: present
-      become: true
-      with_items:
-        - ubuntu-restricted-extras
-        - vlc
-        - tlp
-        - tlp-rdw
-        - network-manager-openvpn-gnome
-      tags:
-        - packages
-
     - name: Configure GNOME Shell.
       import_tasks: tasks_gnome.yml
       tags:
