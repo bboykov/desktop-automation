@@ -27,13 +27,13 @@
     - name: Configure GNOME Terminal.
       import_tasks: tasks_gnome_terminal.yml
       tags:
-        - gnome
+        - gnome-terminal
 
     - name: Install Google Chrome.
       import_role:
         name: google-chrome
       tags:
-        - gnome
+        - gnome-desktop
 
     - name: Configure VIM
       import_tasks: tasks_vimconf.yml
