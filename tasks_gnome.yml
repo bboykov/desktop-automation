@@ -62,3 +62,9 @@
     key: text-scaling-factor
     value: 1.3
 
+- name: Enable extensions
+  gsettings:
+    schema: org.gnome.shell
+    key: enabled-extensions
+    value: ['alternate-tab@gnome-shell-extensions.gcampax.github.com']
+
