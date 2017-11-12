@@ -56,7 +56,7 @@
 
 - name: Run bash-it enable alias
   shell: >
-    source ~/.bash_profile && bash-it enable alias general ansible
+    source ~/.bash_profile && bash-it enable alias general ansible clipboard
   args:
       executable: /bin/bash
   when: bash_it_is_installed.stat.exists == false
