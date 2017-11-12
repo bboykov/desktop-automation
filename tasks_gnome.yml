@@ -9,6 +9,8 @@
     - tlp
     - tlp-rdw
     - network-manager-openvpn-gnome
+    - clipit
+    - xclip
   become: true
 
 - name: Set locales
