@@ -1,5 +1,5 @@
 ---
-- name: Install OS Packages.
+- name: Install OS Packages
   apt:
     name: "{{ item }}"
     state: present

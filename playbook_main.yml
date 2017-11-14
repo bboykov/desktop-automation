@@ -10,7 +10,7 @@
     - name: "Fail if current Ansible version less than {{ required_ansible_version }}"
       fail:
         msg: |
-          Ansible verison is {{ ansible_version.full }}. This playbook requires Ansible {{ required_ansible_version }} or greater.
+          Ansible verison is {{ ansible_version.full }}. This playbook requires Ansible {{ required_ansible_version }} or greater
       when: ansible_version.full < required_ansible_version
 
     - name: Update the apt cache
@@ -19,17 +19,17 @@
         cache_valid_time: 3600 # 1h
       become: true
 
-    - name: Configure GNOME Shell.
+    - name: Configure GNOME Shell
       import_tasks: tasks_gnome.yml
       tags:
         - gnome
 
-    - name: Configure GNOME Terminal.
+    - name: Configure GNOME Terminal
       import_tasks: tasks_gnome_terminal.yml
       tags:
         - gnome-terminal
 
-    - name: Install Google Chrome.
+    - name: Install Google Chrome
       import_role:
         name: google-chrome
       tags:
@@ -40,7 +40,7 @@
       tags:
         - vimconf
 
-    - name: Configure Git.
+    - name: Configure Git
       import_role:
         name: gitconfig
       tags:
