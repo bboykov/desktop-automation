@@ -63,7 +63,7 @@
 
 - name: Run bash-it enable completion
   shell: >
-    source ~/.bash_profile && bash-it enable completion bash-it system git
+    source ~/.bash_profile && bash-it enable completion bash-it system git tmux
   args:
       executable: /bin/bash
   when: bash_it_is_installed.stat.exists == false
