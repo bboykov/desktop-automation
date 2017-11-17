@@ -20,3 +20,12 @@
 - name: gitconfig
   src: https://github.com/bboykov/ansible-role-gitconfig.git
   path: ./roles
+
+- name: virtualbox
+  src: https://github.com/escalate/ansible-virtualbox.git
+  path: ./roles
+
+- name: vagrant
+  src: https://github.com/rsjethani/ansible-role-vagrant.git
+  path: ./roles
+
