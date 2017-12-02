@@ -12,7 +12,9 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "chrisvire/xenial64-gnome"
+  config.vm.box = "file://localhost/Users/bboykov/wd/examples/local_vagrant_boxes/bboykov-ubuntu-1710-desktop-xorg.box"
+
+  # config.vm.box ="generic/ubuntu1710"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

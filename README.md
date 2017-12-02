@@ -5,7 +5,10 @@
 
 ```bash
 sudo apt install -y git
-wget -qO- https://github.com/bboykov/configure-ubuntu-desktop/raw/master/setup_and_run.sh | bash
+cd ~
+git clone https://github.com/bboykov/configure-ubuntu-desktop.git
+cd configure-ubuntu-desktop
+bash configure_desktop.sh
 ```
 
 ## Inspiration

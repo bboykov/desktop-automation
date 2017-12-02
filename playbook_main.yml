@@ -1,10 +1,9 @@
+# Main playbook to run them all
 ---
-- hosts: all
+- name: Check ansible version play
+  hosts: localhost
   vars:
-    required_ansible_version: "2.2.1.0"
-
-  vars_files:
-          - vars/git_vars.yml
+    required_ansible_version: "2.4.1.0"
 
   tasks:
     - name: "Fail if current Ansible version less than {{ required_ansible_version }}"
@@ -13,64 +12,9 @@
           Ansible verison is {{ ansible_version.full }}. This playbook requires Ansible {{ required_ansible_version }} or greater
       when: ansible_version.full < required_ansible_version
 
-    - name: Update the apt cache
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600 # 1h
-      become: true
-
-    - name: Configure GNOME Shell
-      import_tasks: tasks_gnome.yml
-      tags:
-        - gnome-shell
-
-    - name: Configure GNOME Terminal
-      import_tasks: tasks_gnome_terminal.yml
-      tags:
-        - gnome-terminal
-
-    - name: Configure VIM
-      import_tasks: tasks_vimconf.yml
-      tags:
-        - shell
-        - vimconf
-
-    - name: Configure Git
-      import_role:
-        name: gitconfig
-      tags:
-        - shell
-        - git
-
-    - name: Configure shell
-      import_tasks: tasks_shell.yml
-      tags:
-        - shell
-        - bash-it
-        - dotfiles
-
-    - name: Install Google Chrome
-      import_role:
-        name: google-chrome
-      tags:
-        - application
-
-    - name: Install Virtualbox
-      import_role:
-        name: virtualbox
-      vars:
-        virtualbox_version: 5.2
-        virtualbox_group_members:
-          - root
-          - vagrant
-      become: true
-      tags:
-        - application
-
-    - name: Install Vagrant
-      import_role:
-        name: vagrant
-      tags:
-        - application
-
+- import_playbook: playbook_system.yml
+- import_playbook: playbook_desktop.yml
+- import_playbook: playbook_vimconf.yml
+- import_playbook: playbook_shell.yml
+# - import_playbook: playbook_apps.yml
 

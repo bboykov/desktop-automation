@@ -1,0 +1,164 @@
+- name: Configure shell
+  hosts: localhost
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600 # 1h
+      become: true
+
+    - name: Install packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      become: true
+      with_items:
+        - tmux
+
+    - name: Check if bash-it repo is present
+      stat:
+        path: ~/.bash_it/
+      register: bash_it_is_present
+      changed_when: false
+
+    - name: Clone bash-it repo
+      git:
+        repo: https://github.com/Bash-it/bash-it.git
+        dest: ~/.bash_it
+        depth: 1
+      when: bash_it_is_present.stat.exists == false
+
+    - name: Run bash-it install script
+      shell: >
+        ~/.bash_it/install.sh --silent --no-modify-config
+      args:
+        executable: /bin/bash
+      when: bash_it_is_present.stat.exists == false
+
+    - name: Run bash-it update
+      shell: >
+        source ~/.bash_profile && bash-it update
+      args:
+          executable: /bin/bash
+      when: bash_it_is_present.stat.exists == true
+
+    - name: Check if dotfiles repo has been cloned
+      stat:
+        path: ~/dotfiles/
+      register: dotfiles_is_cloned
+      changed_when: false
+
+    - name: Clone dotfiles repo
+      git:
+        repo: https://github.com/bboykov/dotfiles.git
+        dest: ~/dotfiles
+      register: dotfiles_repo
+      when: dotfiles_is_cloned.stat.exists == false
+
+    - name: Run dotfiles makesymlinks script
+      shell: >
+        cd ~/dotfiles && ./makesymlinks.sh
+      args:
+        executable: /bin/bash
+      when: dotfiles_repo.changed
+
+    - name: Run bash-it enable alias
+      shell: >
+        source ~/.bash_profile && bash-it enable alias general ansible clipboard
+      args:
+          executable: /bin/bash
+      when: bash_it_is_present.stat.exists == false
+
+    - name: Run bash-it enable completion
+      shell: >
+        source ~/.bash_profile && bash-it enable completion bash-it system git vagrant tmux
+      args:
+          executable: /bin/bash
+      when: bash_it_is_present.stat.exists == false
+
+    - name: Run bash-it enable plugin
+      shell: >
+        source ~/.bash_profile && bash-it enable plugin edit-mode-vi
+      args:
+          executable: /bin/bash
+      when: bash_it_is_present.stat.exists == false
+
+# Good reads on the topic
+# - http://blog.self.li/post/74294988486/creating-a-post-installation-script-for-ubuntu
+# - https://unix.stackexchange.com/questions/296699/how-to-export-import-ubuntu-16-04-terminal-color-scheme
+# - https://unix.stackexchange.com/questions/203463/how-do-i-loop-through-a-list-from-dconf-in-bash
+- name: Configure GNOME Terminal
+  hosts: localhost
+  tasks:
+    # https://github.com/chriskempson/base16-shell.git
+    - name: Clone base16-shell repo
+      git:
+        repo: https://github.com/chriskempson/base16-shell.git
+        dest: ~/.config/base16-shell
+
+    - name: Clone base16 gnome terminal repo
+      git:
+        repo: https://github.com/aaron-williamson/base16-gnome-terminal.git
+        dest: ~/.config/base16-gnome-terminal
+
+    - name: Check if base16 color script has ran
+      stat:
+        path: ~/.marker-base16-script
+      register: marker_file
+      changed_when: false
+
+    - name: Run base16 color script
+      shell: |
+        if [[ ! -f ~/.marker-base16-script ]] ; then
+        bash ~/.config/base16-gnome-terminal/color-scripts/base16-monokai-256.sh
+        touch ~/.marker-base16-script
+        fi
+      args:
+        executable: /bin/bash
+      when: marker_file.stat.exists == false
+
+    - name: Ensure Inconsolata font is installed
+      apt:
+        name: fonts-inconsolata
+        state: present
+        update_cache: yes
+        cache_valid_time: 86400 #One day
+      become: true
+
+    - name: Read GNOME Terminal profiles
+      dconf:
+        key: /org/gnome/terminal/legacy/profiles:/list
+        state: read
+      register: gterm_profiles
+
+    - debug:
+        # var: term_profiles
+        msg:  "/org/gnome/terminal/legacy/profiles:/:{{ item }}/font"
+      with_items:
+        - "{{ gterm_profiles.value }}"
+
+    - name: Set font to all GNOME Terminal profiles
+      dconf:
+        key: "/org/gnome/terminal/legacy/profiles:/:{{ item }}/font"
+        value: "'Inconsolata Bold 12'"
+        state: present
+      with_items: "{{ gterm_profiles.value }}"
+
+    - name: Set to not use system font
+      dconf:
+        key: "/org/gnome/terminal/legacy/profiles:/:{{ item }}/use-system-font"
+        value: 'false'
+        state: present
+      with_items: "{{ gterm_profiles.value }}"
+
+    # Bash set profile settings script
+    # - name: Configure terminal with dconf
+    #   shell: |
+    #     for PROFILE in $( dconf read /org/gnome/terminal/legacy/profiles:/list|tr -d "[],'");
+    #     do
+    #         dconf write /org/gnome/terminal/legacy/profiles:/:${PROFILE}/font "'Inconsolata Bold 12'"
+    #         dconf write /org/gnome/terminal/legacy/profiles:/:${PROFILE}/use-system-font false
+    #     done
+    #   args:
+    #     executable: /bin/bash
+
