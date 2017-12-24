@@ -16,5 +16,5 @@
 - import_playbook: playbook_desktop.yml
 - import_playbook: playbook_vimconf.yml
 - import_playbook: playbook_shell.yml
-# - import_playbook: playbook_apps.yml
+- import_playbook: playbook_apps.yml
 

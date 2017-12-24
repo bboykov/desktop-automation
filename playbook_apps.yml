@@ -1,6 +1,6 @@
 ---
 - name: Configure various applications
-- hosts: localhost
+  hosts: localhost
   tasks:
     - name: Install Google Chrome
       import_role:
