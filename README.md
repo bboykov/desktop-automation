@@ -1,4 +1,4 @@
-# ansible-provision-ubuntu-desktop
+# My Ansible Plays for Ubuntu GNOME Desktop
 
 
 ## Setup and run
