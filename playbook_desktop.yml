@@ -18,6 +18,7 @@
         - vlc
         - clipit
         - xclip
+        - fonts-inconsolata
 
     - name: Set clock-show-date
       gsettings:
@@ -37,24 +38,27 @@
         key: per-window
         value: "true"
 
-    # High resolutions make text smaller
-    # https://askubuntu.com/questions/60044/how-do-i-change-the-font-dpi-settings
-    # - name: Set text scaling factor
-    #   gsettings:
-    #     schema: org.gnome.desktop.interface
-    #     key: text-scaling-factor
-    #     value: 1.22
-
     - name: Enable extensions
       gsettings:
         schema: org.gnome.shell
         key: enabled-extensions
         value: ['alternate-tab@gnome-shell-extensions.gcampax.github.com']
 
+#     # High resolutions make text smaller
+#     https://askubuntu.com/questions/60044/how-do-i-change-the-font-dpi-settings
+#     - name: Set text scaling factor
+#       gsettings:
+#         schema: org.gnome.desktop.interface
+#         key: text-scaling-factor
+#         value: 1.22
+
+
+### NOTE:Freezed due to issues with dconf
 # Good reads on the topic
 # - http://blog.self.li/post/74294988486/creating-a-post-installation-script-for-ubuntu
 # - https://unix.stackexchange.com/questions/296699/how-to-export-import-ubuntu-16-04-terminal-color-scheme
 # - https://unix.stackexchange.com/questions/203463/how-do-i-loop-through-a-list-from-dconf-in-bash
+
 # - name: Configure GNOME Terminal
 #   hosts: localhost
 #   tasks:
@@ -72,55 +76,55 @@
 #     - name: Run base16 color script
 #       shell: |
 #         if [[ ! -f ~/.marker-base16-script ]] ; then
-#         bash ~/.config/base16-gnome-terminal/color-scripts/base16-monokai-256.sh
+#         bash ~/.config/base16-gnome-terminal/color-scripts/base16-default-dark-256.sh
 #         touch ~/.marker-base16-script
 #         fi
 #       args:
 #         executable: /bin/bash
 #       when: marker_file.stat.exists == false
 
-    - name: Ensure Inconsolata font is installed
-      apt:
-        name: fonts-inconsolata
-        state: present
-        update_cache: yes
-        cache_valid_time: 86400 #One day
-      become: true
+#     - name: Ensure Inconsolata font is installed
+#       apt:
+#         name: fonts-inconsolata
+#         state: present
+#         update_cache: yes
+#         cache_valid_time: 86400 #One day
+#       become: true
 
-    # - name: Read GNOME Terminal profiles
-    #   dconf:
-    #     key: /org/gnome/terminal/legacy/profiles:/list
-    #     state: read
-    #   register: gterm_profiles
+#     - name: Read GNOME Terminal profiles
+#       dconf:
+#         key: /org/gnome/terminal/legacy/profiles:/
+#         state: read
+#       register: gterm_profiles
 
-    # - debug:
-    #     # var: term_profiles
-    #     msg:  "/org/gnome/terminal/legacy/profiles:/:{{ item }}/font"
-    #   with_items:
-    #     - "{{ gterm_profiles.value }}"
+#     - debug:
+#         # var: term_profiles
+#         msg:  "/org/gnome/terminal/legacy/profiles:/:{{ item }}/font"
+#       with_items:
+#         - "{{ gterm_profiles.value }}"
 
-    # - name: Set font to all GNOME Terminal profiles
-    #   dconf:
-    #     key: "/org/gnome/terminal/legacy/profiles:/:{{ item }}/font"
-    #     value: "'Inconsolata Bold 12'"
-    #     state: present
-    #   with_items: "{{ gterm_profiles.value }}"
+#     - name: Set font to all GNOME Terminal profiles
+#       dconf:
+#         key: "/org/gnome/terminal/legacy/profiles:/:{{ item }}/font"
+#         value: "'Inconsolata Bold 12'"
+#         state: present
+#       with_items: "{{ gterm_profiles.value }}"
 
-    # - name: Set to not use system font
-    #   dconf:
-    #     key: "/org/gnome/terminal/legacy/profiles:/:{{ item }}/use-system-font"
-    #     value: 'false'
-    #     state: present
-    #   with_items: "{{ gterm_profiles.value }}"
+#     - name: Set to not use system font
+#       dconf:
+#         key: "/org/gnome/terminal/legacy/profiles:/:{{ item }}/use-system-font"
+#         value: 'false'
+#         state: present
+#       with_items: "{{ gterm_profiles.value }}"
 
-    # Bash set profile settings script
-    # - name: Configure terminal with dconf
-    #   shell: |
-    #     for PROFILE in $( dconf read /org/gnome/terminal/legacy/profiles:/list|tr -d "[],'");
-    #     do
-    #         dconf write /org/gnome/terminal/legacy/profiles:/:${PROFILE}/font "'Inconsolata Bold 12'"
-    #         dconf write /org/gnome/terminal/legacy/profiles:/:${PROFILE}/use-system-font false
-    #     done
-    #   args:
-    #     executable: /bin/bash
+#     # Bash set profile settings script
+#     # - name: Configure terminal with dconf
+#     #   shell: |
+#     #     for PROFILE in $( dconf read /org/gnome/terminal/legacy/profiles:/list|tr -d "[],'");
+#     #     do
+#     #         dconf write /org/gnome/terminal/legacy/profiles:/:${PROFILE}/font "'Inconsolata Bold 12'"
+#     #         dconf write /org/gnome/terminal/legacy/profiles:/:${PROFILE}/use-system-font false
+#     #     done
+#     #   args:
+#     #     executable: /bin/bash
 
