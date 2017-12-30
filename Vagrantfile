@@ -12,7 +12,8 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "file://localhost/Users/bboykov/wd/examples/local_vagrant_boxes/bboykov-ubuntu-1710-desktop-xorg.box"
+  # config.vm.box = "file://localhost/Users/bboykov/wd/examples/local_vagrant_boxes/bboykov-ubuntu-1710-desktop-xorg.box"
+  config.vm.box = "bboykov/ubuntu-1710-artful-desktop"
 
   # config.vm.box ="generic/ubuntu1710"
 
