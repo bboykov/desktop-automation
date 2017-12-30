@@ -38,6 +38,19 @@
         key: per-window
         value: "true"
 
+
+    - name: Set Dock position on screen
+      gsettings:
+        schema: org.gnome.shell.extensions.dash-to-dock
+        key: dock-position
+        value: "BOTTOM"
+
+    - name: Set Dock auto-hide
+      gsettings:
+        schema: org.gnome.shell.extensions.dash-to-dock
+        key: dock-fixed
+        value: "false"
+
     - name: Enable extensions
       gsettings:
         schema: org.gnome.shell
