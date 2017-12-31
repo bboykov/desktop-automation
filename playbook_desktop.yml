@@ -14,11 +14,16 @@
         state: present
       become: true
       with_items:
+        - gnome-tweak-tool # NOTE below
+          # Extensions list:
+          # alternate-tab
+          # caffeine
+          # Ref: http://ubuntuhandbook.org/index.php/2017/10/install-gnome-extensions-ubuntu-17-10/
+        - fonts-inconsolata
         - network-manager-openvpn-gnome
         - vlc
         - clipit
         - xclip
-        - fonts-inconsolata
 
     - name: Set clock-show-date
       gsettings:
@@ -50,12 +55,6 @@
         schema: org.gnome.shell.extensions.dash-to-dock
         key: dock-fixed
         value: "false"
-
-    - name: Enable extensions
-      gsettings:
-        schema: org.gnome.shell
-        key: enabled-extensions
-        value: ['alternate-tab@gnome-shell-extensions.gcampax.github.com']
 
 #     # High resolutions make text smaller
 #     https://askubuntu.com/questions/60044/how-do-i-change-the-font-dpi-settings
