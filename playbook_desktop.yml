@@ -23,7 +23,6 @@
         - network-manager-openvpn-gnome
         - vlc
         - clipit
-        - xclip
 
     - name: Set clock-show-date
       gsettings:

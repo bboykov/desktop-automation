@@ -13,6 +13,8 @@
         state: present
       become: true
       with_items:
+        - xclip
+        - xsel
         - tmux
 
     - name: Check if bash-it repo is present
@@ -77,4 +79,17 @@
       git:
         repo: https://github.com/chriskempson/base16-shell.git
         dest: ~/.config/base16-shell
+
+
+    - name: Check if tmux TPM repo is present
+      stat:
+        path: ~/.tmux/plugins/tpm
+      register: tmux_tpm_repo_is_present
+      changed_when: false
+
+    - name: Clone TMUX TPM repo
+      git:
+        repo: https://github.com/tmux-plugins/tpm
+        dest: ~/.tmux/plugins/tpm
+      when: tmux_tpm_repo_is_present.stat.exists == false
 
