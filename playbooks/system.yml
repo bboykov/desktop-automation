@@ -9,14 +9,26 @@
         cache_valid_time: 3600 # 1h
       become: true
 
-    - name: Install packages
+    - name: Install mics packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - curl
+        - tlp
+        - tlp-rdw
+
+    - name: Install graphic packages
       apt:
         name: "{{ item }}"
         state: present
       with_items:
         - ubuntu-restricted-extras
-        - tlp
-        - tlp-rdw
+        - libdvdnav4
+        - libdvdread4
+        - gstreamer1.0-plugins-bad
+        - gstreamer1.0-plugins-ugly
+        - libdvd-pkg
 
     - name: Set locale
       copy:
