@@ -4,8 +4,7 @@ set -o errexit
 set -x
 
 sudo apt-get update
-sudo apt install -y git python python-dev python-setuptools build-essential
-sudo easy_install pip
+sudo apt install -y git python-pip
 sudo -H pip install --upgrade pip
 
 # Due to https://github.com/ansible/ansible/issues/26670
